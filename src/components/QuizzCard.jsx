@@ -7,7 +7,7 @@ const QuizzCard = ({ quiz }) => {
 
 	quizAnswers.sort(() => Math.random() - 0.5)
 
-	const answerItems = quizAnswers.map(answer=> <Answer answer={answer} />)
+	const answerItems = quizAnswers.map((answer, index) => <Answer answer={answer} key={index}/>)
 
 	return (
 		<div className='quizzcard'>

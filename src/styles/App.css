@@ -1,48 +1,83 @@
 * {
-  margin: 0;
-  border: 0;
-  box-sizing: border-box;
+	margin: 0;
+	border: 0;
+	box-sizing: border-box;
 }
 
-#root{
+#root {
 	display: flex;
 	justify-content: center;
 }
 
 .app {
-  padding: 4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
+	padding: 4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
 }
 
-
 body {
-	background: #F5F7FB;
+	background: #f5f7fb;
 	color: #293264;
 	font-family: "Inter";
 }
 
-.start__title{
-font-family: 'Karla';
-font-weight: 700;
-font-size: 31.25px;
-line-height: 37px;
-margin-bottom: 10px;
+.start__title {
+	font-family: "Karla";
+	font-weight: 700;
+	font-size: 31.25px;
+	line-height: 37px;
+	margin-bottom: 10px;
 }
 
-.start__subtitle{
+.start__subtitle {
 	margin-bottom: 30px;
 }
 
 .start {
 	display: flex;
-	justify-content:center;align-items: center;
+	justify-content: center;
+	align-items: center;
 	flex-direction: column;
 }
 
-.quiz{
+.quiz {
 	max-width: 800px;
+}
+
+.quiz__quistions{
+	margin-bottom: 20px;
+}
+
+.quizzcard {
+	padding: 15px 0;
+	border-bottom: 1px solid #dbdef0;
+}
+
+.quizzcard__quastion {
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 19px;
+	padding: 0px 0px 15px 0px;
+}
+
+.quizzcard__answers {
+	display: flex;
+}
+
+.answer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 25px;
+	padding: 3px 8px;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 12px;
+	border: 0.794239px solid #4d5b9e;
+	border-radius: 7.94239px;
+	cursor: pointer;
+	margin: 0px 12px 0px 0px;
 }

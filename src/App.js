@@ -4,7 +4,7 @@ import QuizzPage from './components/QuizzPage';
 import StartPage from "./components/StartPage";
 import "./styles/App.css"
 
-const API_URL = `https://opentdb.com/api.php?amount=10&type=multiple`
+const API_URL = `https://opentdb.com/api.php?amount=5&type=multiple`
 
 
 function App() {
@@ -26,8 +26,7 @@ function App() {
 
 	return (
 		<div className="app">
-			{/* <StartPage /> */}
-			<QuizzPage quizzes={quizzes}/>
+			{start ? <StartPage start={start} setStart={setStart} /> : <QuizzPage quizzes={quizzes} setStart={setStart} />}
 		</div>
 	);
 }

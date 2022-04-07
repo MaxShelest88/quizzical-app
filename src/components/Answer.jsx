@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Answer = ({answer}) => {
+const Answer = (props) => {
 	return (
-		<div className='answer'>
-			{answer}
+		<div
+			className={`answer${props.selectedAnswer ? " selected" : ""}`} dangerouslySetInnerHTML={{__html:props.answer}}
+			onClick={()=>props.selectAnswer()}
+		>
 		</div>
 	);
 };

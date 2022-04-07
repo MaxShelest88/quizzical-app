@@ -13,10 +13,12 @@ function App() {
 
 	const [quizzes, setQuizzes] = useState([])
 
+
+
 	const fetchQuizzes = async () => {
 		const res = await axios.get(API_URL)
 		setQuizzes(res.data.results);
-		console.log(res)
+		console.log(res.data.results)
 	}
 
 	useEffect(() => {

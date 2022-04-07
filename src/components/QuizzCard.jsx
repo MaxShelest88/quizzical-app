@@ -5,16 +5,17 @@ const QuizzCard = ({ quiz }) => {
 
 	const [selectedAnswer, setSelectedAnswer] = useState(false)
 
+	const [quizAnswers, setQuizAnswers] = useState([])
+
+	const unmixedAnswers = [quiz.correct_answer, ...quiz.incorrect_answers]
+
+	useEffect(()=>{
+		setQuizAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
+	},[])
+
 	function selectAnswer(){
 		setSelectedAnswer(prevSelect=>!prevSelect)
 	}
-
-	const [quizAnswers, setQuizAnswers] = useState([])
-
-	useEffect(()=>{
-		setQuizAnswers([quiz.correct_answer, ...quiz.incorrect_answers].sort(() => Math.random() - 0.5))
-	},[])
-
 
 
 	const answerItems = quizAnswers.map((answer, index) => <Answer

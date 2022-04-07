@@ -1,10 +1,12 @@
 import React from 'react';
+import AppButton from './ui/button/AppButton';
 
 const StartPage = () => {
 	return (
 		<div className='start'>
-			<h1>Quizzical</h1>
-			<h3>Some description if needed</h3>
+			<div className='start__title'>Quizzical</div>
+			<div className='start__subtitle'>Some description if needed</div>
+			<AppButton>Start quiz</AppButton>
 		</div>
 	);
 };

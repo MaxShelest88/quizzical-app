@@ -1,17 +1,35 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react'
+import QuizzPage from './components/QuizzPage';
 import StartPage from "./components/StartPage";
 import "./styles/App.css"
 
+const API_URL = `https://opentdb.com/api.php?amount=10`
 
 
 function App() {
 
-	const API_URL = `https://opentdb.com/api.php?amount=10`
+	const [start, setStart] = useState(true)
 
-  return (
-    <div className="app">
-     <StartPage />
-    </div>
-  );
+	const [quizzes, setQuizzes] = useState([])
+
+	const fetchQuizzes = async () => {
+		const res = await axios.get(API_URL)
+		setQuizzes(res.data.results);
+		console.log(res)
+	}
+
+	useEffect(() => {
+		fetchQuizzes()
+	}, [])
+
+
+	return (
+		<div className="app">
+			{/* <StartPage /> */}
+			<QuizzPage quizzes= {quizzes}/>
+		</div>
+	);
 }
 
 export default App;

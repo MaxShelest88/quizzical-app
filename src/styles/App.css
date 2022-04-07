@@ -4,15 +4,45 @@
   box-sizing: border-box;
 }
 
+#root{
+	display: flex;
+	justify-content: center;
+}
+
 .app {
   padding: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100vh;
 }
+
 
 body {
 	background: #F5F7FB;
 	color: #293264;
+	font-family: "Inter";
+}
+
+.start__title{
+font-family: 'Karla';
+font-weight: 700;
+font-size: 31.25px;
+line-height: 37px;
+margin-bottom: 10px;
+}
+
+.start__subtitle{
+	margin-bottom: 30px;
+}
+
+.start {
+	display: flex;
+	justify-content:center;align-items: center;
+	flex-direction: column;
+}
+
+.quiz{
+	max-width: 800px;
 }

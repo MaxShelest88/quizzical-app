@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Answer from './Answer';
 
-const QuizzCard = ({ quiz }) => {
+const QuizzCard = ({ quiz, index, updateAllAnswers }) => {
 
-	const [allAnswers, setAllAnswers] = useState([])
+	const [allCardAnswers, setAllCardAnswers] = useState([])
 
 	const correctAnswer = quiz.correct_answer
 
@@ -19,11 +19,11 @@ const QuizzCard = ({ quiz }) => {
 	})
 
 	useEffect(()=>{
-		setAllAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
+		setAllCardAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
 	},[])
 
 	function selectAnswer(id) {
-		setAllAnswers(prevAllAnswers => {
+		setAllCardAnswers(prevAllAnswers => {
 			const newAnswers = []
 			let updatedAnswer;
 			prevAllAnswers.forEach(answer => {
@@ -46,24 +46,28 @@ const QuizzCard = ({ quiz }) => {
 	}
 
 	function checkAnswers() {
-		setAllAnswers(prevAllAnswers => {
-			const checkedAnswers = []
-			prevAllAnswers.forEach(answer => {
+		setAllCardAnswers(prevCardAnswers => {
+			const checkedAnswers =
+				{
+					index:index,
+					checked:[]
+				}
+			prevCardAnswers.forEach(answer => {
 				if (answer === correctAnswer && answer.isSelected) {
 					const checkAnswer = {
 						...answer,
 						isCorrect:true
 					}
-					checkedAnswers.push(checkAnswer)
+					checkedAnswers.checked.push(checkAnswer)
 				} else {
-					checkedAnswers.push(answer)
+					checkedAnswers.checked.push(answer)
 				}
 			})
-			return checkedAnswers
+			updateAllAnswers(checkedAnswers, checkedAnswers.index)
 		})
 	}
 
-	const answerItems = allAnswers.map((answer, index) => <Answer
+	const answerItems = allCardAnswers.map((answer, index) => <Answer
 		answer={answer}
 		key={index}
 		selectAnswer={() => selectAnswer(answer.id)}

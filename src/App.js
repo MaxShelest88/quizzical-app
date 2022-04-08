@@ -13,8 +13,6 @@ function App() {
 
 	const [quizzes, setQuizzes] = useState([])
 
-
-
 	const fetchQuizzes = async () => {
 		const res = await axios.get(API_URL)
 		setQuizzes(res.data.results);
@@ -24,8 +22,8 @@ function App() {
 	useEffect(() => {
 		fetchQuizzes()
 	}, [])
-
-
+	
+	
 	return (
 		<div className="app">
 			{start ? <StartPage start={start} setStart={setStart} /> : <QuizzPage quizzes={quizzes} setStart={setStart} />}

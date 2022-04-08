@@ -6,6 +6,7 @@ const QuizzPage = ({quizzes, setStart}) => {
 
 	const quizzesItems = quizzes.map(quiz => <QuizzCard quiz={quiz} key={quiz.question}/>
 	)
+	
 
 	return (
 			<div className='quiz'>

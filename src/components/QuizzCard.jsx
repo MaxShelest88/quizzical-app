@@ -5,16 +5,16 @@ const QuizzCard = ({ quiz }) => {
 
 	const [allAnswers, setAllAnswers] = useState([])
 
-	const [correctAnwer, setCorrectAnswer] = useState(quiz.correct_answer)
+	const correctAnswer = quiz.correct_answer
 
-	const [incorrentAnswers, setIncorrentAnswers] = useState(quiz.incorrect_answers)
+	const incorrentAnswers = quiz.incorrect_answers
 
-	const unmixedAnswers = [correctAnwer, ...incorrentAnswers].map((answer, index) => {
+	const unmixedAnswers = [correctAnswer, ...incorrentAnswers].map((answer, index) => {
 		return {
 			id: index,
 			answer,
 			isSelected: false,
-			isCorrect: answer===correctAnwer ? true : false
+			isCorrect: false
 		}
 	})
 
@@ -42,6 +42,24 @@ const QuizzCard = ({ quiz }) => {
 				}
 			})
 			return newAnswers
+		})
+	}
+
+	function checkAnswers() {
+		setAllAnswers(prevAllAnswers => {
+			const checkedAnswers = []
+			prevAllAnswers.forEach(answer => {
+				if (answer === correctAnswer && answer.isSelected) {
+					const checkAnswer = {
+						...answer,
+						isCorrect:true
+					}
+					checkedAnswers.push(checkAnswer)
+				} else {
+					checkedAnswers.push(answer)
+				}
+			})
+			return checkedAnswers
 		})
 	}
 

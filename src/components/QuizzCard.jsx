@@ -3,27 +3,52 @@ import Answer from './Answer';
 
 const QuizzCard = ({ quiz }) => {
 
-	const [selectedAnswer, setSelectedAnswer] = useState(false)
+	const [allAnswers, setAllAnswers] = useState([])
 
-	const [quizAnswers, setQuizAnswers] = useState([])
+	const [correctAnwer, setCorrectAnswer] = useState(quiz.correct_answer)
 
-	const unmixedAnswers = [quiz.correct_answer, ...quiz.incorrect_answers]
+	const [incorrentAnswers, setIncorrentAnswers] = useState(quiz.incorrect_answers)
+
+	const unmixedAnswers = [correctAnwer, ...incorrentAnswers].map((answer, index) => {
+		return {
+			id: index,
+			answer,
+			isSelected: false,
+			isCorrect: answer===correctAnwer ? true : false
+		}
+	})
 
 	useEffect(()=>{
-		setQuizAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
+		setAllAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
 	},[])
 
-	function selectAnswer(){
-		setSelectedAnswer(prevSelect=>!prevSelect)
+	function selectAnswer(id) {
+		setAllAnswers(prevAllAnswers => {
+			const newAnswers = []
+			let updatedAnswer;
+			prevAllAnswers.forEach(answer => {
+				if (answer.id === id) {
+					updatedAnswer = {
+						...answer,
+						isSelected : !answer.isSelected
+					}
+					newAnswers.push(updatedAnswer)
+				} else {
+					 updatedAnswer = {
+						...answer,
+						isSelected: false
+					}
+					newAnswers.push(updatedAnswer)
+				}
+			})
+			return newAnswers
+		})
 	}
 
-
-	const answerItems = quizAnswers.map((answer, index) => <Answer
-		setSelectedAnswer={setSelectedAnswer}
-		selectedAnswer={selectedAnswer}
+	const answerItems = allAnswers.map((answer, index) => <Answer
 		answer={answer}
 		key={index}
-		selectAnswer={selectAnswer}
+		selectAnswer={() => selectAnswer(answer.id)}
 	/>)
 
 	return (

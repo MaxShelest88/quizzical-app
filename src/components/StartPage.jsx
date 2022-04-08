@@ -1,13 +1,13 @@
 import React from 'react';
 import AppButton from './ui/button/AppButton';
 
-const StartPage = ({setStart}) => {
+const StartPage = ({changeStart}) => {
 	return (
 		<div className='start'>
 			<div className='start__title'>Quizzical</div>
 			<div className='start__subtitle'>Some description if needed</div>
 			<AppButton
-				setStart={setStart}
+				onClick={()=>changeStart()}
 				>
 			Start quiz
 		</AppButton>

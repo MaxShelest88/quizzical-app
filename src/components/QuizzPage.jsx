@@ -2,11 +2,10 @@ import React from 'react';
 import QuizzCard from './QuizzCard';
 import AppButton from './ui/button/AppButton';
 
-const QuizzPage = ({quizzes, setStart}) => {
+const QuizzPage = ({quizzes}) => {
 
 	const quizzesItems = quizzes.map(quiz => <QuizzCard quiz={quiz} key={quiz.question}/>
 	)
-	
 
 	return (
 			<div className='quiz'>

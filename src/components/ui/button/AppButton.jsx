@@ -5,7 +5,7 @@ const AppButton = ({children, ...props}) => {
 	return (
 		<button
 			className={classes.appBtn}
-			onClick={() => { props.setStart(prevStart=>!prevStart)}}
+			onClick={props.onClick}
 		>
 			{children}
 		</button>

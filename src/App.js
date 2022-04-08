@@ -22,14 +22,11 @@ function App() {
 	useEffect(() => {
 		fetchQuizzes()
 	}, [])
-
-	function changeStart(){
-		setStart(prevStart=>!prevStart)
-	}
+	
 	
 	return (
 		<div className="app">
-			{start ? <StartPage start={start} changeStart={changeStart} /> : <QuizzPage quizzes={quizzes} />}
+			{start ? <StartPage start={start} setStart={setStart} /> : <QuizzPage quizzes={quizzes} setStart={setStart} />}
 		</div>
 	);
 }

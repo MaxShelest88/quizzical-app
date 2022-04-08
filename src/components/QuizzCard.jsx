@@ -14,18 +14,13 @@ const QuizzCard = ({ quiz }) => {
 			id: index,
 			answer,
 			isSelected: false,
-			isCorrect: answer === correctAnswer,
-			answered:false
+			isCorrect: false
 		}
 	})
 
 	useEffect(()=>{
 		setAllAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
 	},[])
-
-	useEffect(()=>{
-		console.log(allAnswers)
-	},[allAnswers])
 
 	function selectAnswer(id) {
 		setAllAnswers(prevAllAnswers => {
@@ -48,17 +43,16 @@ const QuizzCard = ({ quiz }) => {
 			})
 			return newAnswers
 		})
-		checkAnswers()
 	}
 
 	function checkAnswers() {
 		setAllAnswers(prevAllAnswers => {
 			const checkedAnswers = []
 			prevAllAnswers.forEach(answer => {
-				if (answer.isCorrect && answer.isSelected) {
+				if (answer === correctAnswer && answer.isSelected) {
 					const checkAnswer = {
 						...answer,
-						answered:true
+						isCorrect:true
 					}
 					checkedAnswers.push(checkAnswer)
 				} else {

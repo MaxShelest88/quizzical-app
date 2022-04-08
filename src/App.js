@@ -23,7 +23,6 @@ function App() {
 		fetchQuizzes()
 	}, [])
 	
-	
 	return (
 		<div className="app">
 			{start ? <StartPage start={start} setStart={setStart} /> : <QuizzPage quizzes={quizzes} setStart={setStart} />}

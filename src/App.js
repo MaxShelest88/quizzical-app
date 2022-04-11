@@ -13,6 +13,7 @@ function App() {
 
 	const [quizzes, setQuizzes] = useState([])
 
+
 	const fetchQuizzes = async () => {
 		const res = await axios.get(API_URL)
 		setQuizzes(res.data.results);
@@ -29,7 +30,15 @@ function App() {
 	
 	return (
 		<div className="app">
-			{start ? <StartPage start={start} changeStart={changeStart} /> : <QuizzPage quizzes={quizzes} setStart={setStart} />}
+			{
+				start ?
+					<StartPage
+						start={start}
+						changeStart={changeStart} /> :
+					<QuizzPage
+						quizzes={quizzes}
+						setStart={setStart}
+						/>}
 		</div>
 	);
 }

@@ -7,7 +7,7 @@ const StartPage = ({changeStart}) => {
 			<div className='start__title'>Quizzical</div>
 			<div className='start__subtitle'>Some description if needed</div>
 			<AppButton
-				onClick={()=>changeStart()}
+				onClick={changeStart}
 				>
 			Start quiz
 		</AppButton>

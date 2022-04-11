@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Answer from './Answer';
 
-const QuizzCard = ({ quiz }) => {
+const QuizzCard = ({ quiz, setQuizzesCheck }) => {
 
 	const [allAnswers, setAllAnswers] = useState([])
 
@@ -21,6 +21,14 @@ const QuizzCard = ({ quiz }) => {
 	useEffect(()=>{
 		setAllAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
 	},[])
+
+	useEffect(()=>{
+		if(allAnswers.length > 0){
+			setQuizzesCheck(prevState=>{
+				return{...prevState, answered:true}
+			})
+		}
+	},[allAnswers])
 
 	function selectAnswer(id) {
 		setAllAnswers(prevAllAnswers => {
@@ -45,11 +53,16 @@ const QuizzCard = ({ quiz }) => {
 		})
 	}
 
+	function clickHandle(id) {
+		selectAnswer(id)
+		checkAnswers()
+	}
+
 	function checkAnswers() {
 		setAllAnswers(prevAllAnswers => {
 			const checkedAnswers = []
 			prevAllAnswers.forEach(answer => {
-				if (answer === correctAnswer && answer.isSelected) {
+				if (answer.answer===correctAnswer) {
 					const checkAnswer = {
 						...answer,
 						isCorrect:true
@@ -61,12 +74,13 @@ const QuizzCard = ({ quiz }) => {
 			})
 			return checkedAnswers
 		})
+		console.log(correctAnswer)
 	}
 
 	const answerItems = allAnswers.map((answer, index) => <Answer
 		answer={answer}
 		key={index}
-		selectAnswer={() => selectAnswer(answer.id)}
+		selectAnswer={() => clickHandle(answer.id)}
 	/>)
 
 	return (

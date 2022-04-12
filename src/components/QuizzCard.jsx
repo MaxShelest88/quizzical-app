@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Answer from './Answer';
+import answer from "./Answer";
 
-const QuizzCard = ({ quiz, setQuizzesCheck }) => {
+const QuizzCard = ({ quiz, ...props }) => {
 
 	const [allAnswers, setAllAnswers] = useState([])
 
@@ -23,12 +24,13 @@ const QuizzCard = ({ quiz, setQuizzesCheck }) => {
 	},[])
 
 	useEffect(()=>{
-		if(allAnswers.length > 0){
-			setQuizzesCheck(prevState=>{
-				return{...prevState, answered:true}
-			})
-		}
+		allAnswers.forEach(answer=>{
+			if (answer.isSelected && answer.isCorrect){
+				props.updateQuizzes(props.index)
+			}
+		})
 	},[allAnswers])
+
 
 	function selectAnswer(id) {
 		setAllAnswers(prevAllAnswers => {
@@ -59,22 +61,24 @@ const QuizzCard = ({ quiz, setQuizzesCheck }) => {
 	}
 
 	function checkAnswers() {
-		setAllAnswers(prevAllAnswers => {
-			const checkedAnswers = []
-			prevAllAnswers.forEach(answer => {
-				if (answer.answer===correctAnswer) {
-					const checkAnswer = {
-						...answer,
-						isCorrect:true
+		if (quiz.index === props.index) {
+			setAllAnswers(prevAllAnswers => {
+				const checkedAnswers = []
+				prevAllAnswers.forEach(answer => {
+					if (answer.answer===correctAnswer) {
+						const checkAnswer = {
+							...answer,
+							isCorrect:true
+						}
+						checkedAnswers.push(checkAnswer)
+					} else {
+						checkedAnswers.push(answer)
 					}
-					checkedAnswers.push(checkAnswer)
-				} else {
-					checkedAnswers.push(answer)
-				}
+				})
+				return checkedAnswers
 			})
-			return checkedAnswers
-		})
-		console.log(correctAnswer)
+		}
+
 	}
 
 	const answerItems = allAnswers.map((answer, index) => <Answer

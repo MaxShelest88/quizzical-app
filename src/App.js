@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import QuizzPage from './components/QuizzPage';
 import StartPage from "./components/StartPage";
 import "./styles/App.css"
-import answer from "./components/Answer";
 
 const API_URL = `https://opentdb.com/api.php?amount=5&type=multiple`
 
@@ -16,30 +15,36 @@ function App() {
 
 	const fetchQuizzes = async () => {
 		const res = await axios.get(API_URL)
-		setQuizzes(res.data.results.map((quiz, index)=>{return{...quiz, index, answered:false}}));
+		setQuizzes(res.data.results.map(quiz => {
+			return {
+				...quiz,
+				answers: [...quiz.incorrect_answers, quiz.correct_answer]
+					.map((answer, index) => {
+						return {
+							id: index,
+							answer,
+							isSelected: false,
+							isCorrect: answer === quiz.correct_answer ? true : false,
+							answered: false
+						}
+					})
+					.sort(() => Math.random() - 0.5),
+				answered: false
+			}
+		}));
+		
 	}
 
 	useEffect(() => {
 		fetchQuizzes()
 	}, [])
 
-	useEffect(()=>{
-		console.log(quizzes)
-	}, [quizzes])
+	console.log(quizzes);
 
 	const changeStart =() =>{
 		setStart(prevState => !prevState)
 	}
 
-	function updateQuizzes(index){
-		setQuizzes(prevQuizzes=>{
-			prevQuizzes.map(quiz=>{
-
-					return {...quiz, answered:true}
-
-			})
-		})
-	}
 	
 	return (
 		<div className="app">
@@ -50,8 +55,7 @@ function App() {
 						changeStart={changeStart} /> :
 					<QuizzPage
 						quizzes={quizzes}
-						setStart={setStart}
-						updateQuizzes={updateQuizzes}
+						setQuizzes={setQuizzes}
 						/>}
 		</div>
 	);

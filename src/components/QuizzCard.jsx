@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Answer from './Answer';
 import answer from "./Answer";
 
-const QuizzCard = ({ quiz, setQuizzes, quizzes}) => {
+const QuizzCard = ({ quiz, updateAllAnswers}) => {
+
+	const [answers, setAnswers] = useState(quiz.answers)
+
+
 
 	// const [allAnsweres, setAllAnsweres] = useState([])
 
@@ -25,48 +29,36 @@ const QuizzCard = ({ quiz, setQuizzes, quizzes}) => {
 	// }, [])
 
 
-	// function selectAnswer(id) {
-	// 	setQuizzes(prevQuizzes => {
-	// 		const newAnswers = []
-	// 		let updatedAnswer;
-	// 		quiz.answers.forEach(answer => {
-	// 			if (answer.id === id) {
-	// 				updatedAnswer = {
-	// 					...answer,
-	// 					isSelected: !answer.isSelected
-	// 				}
-	// 				newAnswers.push(updatedAnswer)
-	// 			} else {
-	// 				updatedAnswer = {
-	// 					...answer,
-	// 					isSelected: false
-	// 				}
-	// 				newAnswers.push(updatedAnswer)
-	// 			}
-	// 		})
-	// 		return newAnswers
-	// 	})
-	// }
-
 	function selectAnswer(id) {
-		setQuizzes(prevQuizzes => prevQuizzes.map(quiz => {
-			quiz.answers.map(answer => {
+		setAnswers(prevAnswers => {
+			const newAnswers = []
+			let updatedAnswer;
+			quiz.answers.forEach(answer => {
 				if (answer.id === id) {
-					return {
+					updatedAnswer = {
 						...answer,
 						isSelected: !answer.isSelected
 					}
+					newAnswers.push(updatedAnswer)
+				} else {
+					updatedAnswer = {
+						...answer,
+						isSelected: false
+					}
+					newAnswers.push(updatedAnswer)
 				}
 			})
-		}))
+			return newAnswers
+		})
 	}
+
 
 	function clickHandle(id) {
 		selectAnswer(id)
 	}
 
 
-	const answerItems = quiz.answers.map((answer, index) => <Answer
+	const answerItems = answers.map((answer, index) => <Answer
 		answer={answer}
 		key={index}
 		selectAnswer={() => clickHandle(answer.id)}

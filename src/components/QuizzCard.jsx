@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Answer from './Answer';
+import answer from "./Answer";
 
-const QuizzCard = ({ quiz, index, updateAllAnswers }) => {
+const QuizzCard = ({ quiz, ...props }) => {
 
-	const [allCardAnswers, setAllCardAnswers] = useState([])
+	const [allAnswers, setAllAnswers] = useState([])
 
 	const correctAnswer = quiz.correct_answer
 
@@ -19,11 +20,20 @@ const QuizzCard = ({ quiz, index, updateAllAnswers }) => {
 	})
 
 	useEffect(()=>{
-		setAllCardAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
+		setAllAnswers(unmixedAnswers.sort(() => Math.random() - 0.5))
 	},[])
 
+	useEffect(()=>{
+		allAnswers.forEach(answer=>{
+			if (answer.isSelected && answer.isCorrect){
+				props.updateQuizzes(props.index)
+			}
+		})
+	},[allAnswers])
+
+
 	function selectAnswer(id) {
-		setAllCardAnswers(prevAllAnswers => {
+		setAllAnswers(prevAllAnswers => {
 			const newAnswers = []
 			let updatedAnswer;
 			prevAllAnswers.forEach(answer => {
@@ -45,32 +55,36 @@ const QuizzCard = ({ quiz, index, updateAllAnswers }) => {
 		})
 	}
 
-	function checkAnswers() {
-		setAllCardAnswers(prevCardAnswers => {
-			const checkedAnswers =
-				{
-					index:index,
-					checked:[]
-				}
-			prevCardAnswers.forEach(answer => {
-				if (answer === correctAnswer && answer.isSelected) {
-					const checkAnswer = {
-						...answer,
-						isCorrect:true
-					}
-					checkedAnswers.checked.push(checkAnswer)
-				} else {
-					checkedAnswers.checked.push(answer)
-				}
-			})
-			updateAllAnswers(checkedAnswers, checkedAnswers.index)
-		})
+	function clickHandle(id) {
+		selectAnswer(id)
+		checkAnswers()
 	}
 
-	const answerItems = allCardAnswers.map((answer, index) => <Answer
+	function checkAnswers() {
+		if (quiz.index === props.index) {
+			setAllAnswers(prevAllAnswers => {
+				const checkedAnswers = []
+				prevAllAnswers.forEach(answer => {
+					if (answer.answer===correctAnswer) {
+						const checkAnswer = {
+							...answer,
+							isCorrect:true
+						}
+						checkedAnswers.push(checkAnswer)
+					} else {
+						checkedAnswers.push(answer)
+					}
+				})
+				return checkedAnswers
+			})
+		}
+
+	}
+
+	const answerItems = allAnswers.map((answer, index) => <Answer
 		answer={answer}
 		key={index}
-		selectAnswer={() => selectAnswer(answer.id)}
+		selectAnswer={() => clickHandle(answer.id)}
 	/>)
 
 	return (

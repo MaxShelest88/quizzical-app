@@ -85,3 +85,11 @@ body {
 .answer.selected {
 	background: #D6DBF5;
 }
+
+.answer.answered {
+	background: #94D7A2;
+}
+
+.answer.mistaken {
+	background: #F8BCBC;
+}

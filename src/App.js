@@ -15,7 +15,7 @@ function App() {
 
 	const fetchQuizzes = async () => {
 		const res = await axios.get(API_URL)
-		setQuizzes(res.data.results.map(quiz => {
+		setQuizzes(res.data.results.map((quiz,index) => {
 			return {
 				...quiz,
 				answers: [...quiz.incorrect_answers, quiz.correct_answer]
@@ -24,15 +24,15 @@ function App() {
 							id: index,
 							answer,
 							isSelected: false,
-							isCorrect: answer === quiz.correct_answer ? true : false,
-							answered: false
+							isCorrect: answer === quiz.correct_answer,
+							answered: null
 						}
 					})
 					.sort(() => Math.random() - 0.5),
-				answered: false
+				answered: false,
+				id:index
 			}
 		}));
-		
 	}
 
 	useEffect(() => {

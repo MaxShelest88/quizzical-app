@@ -1,14 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import QuizzCard from './QuizzCard';
 import AppButton from './ui/button/AppButton';
+import answer from "./Answer";
 
 const QuizzPage = ({ quizzes, setQuizzes }) => {
 
 	const [isChecked, setIsChecked] = useState(false)
 
-	const [allAnswers, setAllAnswers] = useState(quizzes.map(quiz=>quiz.answers))
-
-	console.log(allAnswers)
+	function checkAnswers(){
+		setQuizzes(prevQuizzes =>prevQuizzes.map(quiz=> {
+				const newAnswers = []
+				let updatedAnswer;
+				quiz.answers?.forEach(answer => {
+					if (answer.isSelected && answer.isCorrect) {
+						updatedAnswer = {
+							...answer,
+							answered:true,
+						}
+						newAnswers.push(updatedAnswer)
+					} else {
+						updatedAnswer = {
+							...answer,
+							answered:false,
+						}
+						newAnswers.push(updatedAnswer)
+					}
+				})
+				return {...quiz,
+					answers: [...newAnswers]}
+		}))
+	}
 
 	const quizzesItems = quizzes.map((quiz, index) =>
 		<QuizzCard
@@ -16,26 +37,17 @@ const QuizzPage = ({ quizzes, setQuizzes }) => {
 			index={index}
 			setQuizzes={setQuizzes}
 			key={quiz.question}
-			quizzes={quizzes}
-			updateAllAnswers={updateAllAnswers}
 		/>
 	)
-
-	function updateAllAnswers(answer){
-		setAllAnswers(prevAllAnswers=>prevAllAnswers.map(item=>{
-			if(item.index === answer.index){
-				return {...answer}
-			}
-			return item
-		}))
-	}
 
 	return (
 		<div className='quiz'>
 			<div className="quiz__quistions">
 				{quizzesItems}
 			</div>
-			<AppButton>
+			<AppButton
+				onClick={checkAnswers}
+			>
 				Check answers
 			</AppButton>
 		</div>

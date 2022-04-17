@@ -5,7 +5,7 @@ const StartPage = ({changeStart}) => {
 	return (
 		<div className='start'>
 			<div className='start__title'>Quizzical</div>
-			<div className='start__subtitle'>Some description if needed</div>
+			<div className='start__subtitle'>Answer question and have fun!</div>
 			<AppButton
 				onClick={changeStart}
 				>

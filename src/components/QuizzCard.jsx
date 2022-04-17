@@ -34,6 +34,7 @@ const QuizzCard = ({ quiz, index, setQuizzes}) => {
 	}
 
 
+
 	const answerItems = quiz.answers.map((answer, index) => <Answer
 		answer={answer}
 		key={index}

@@ -5,7 +5,7 @@ const Answer = ({answer, selectAnswer}) => {
         <div
             className={`answer${
                 answer.isSelected ? " selected" :
-                    answer.isSelected ? " answered" :
+                    answer.answered && answer.isCorrect ? " answered" :
                         answer.answered !== null && !answer.answered && answer.isCorrect ? " mistaken" :
                             ""}`}
             dangerouslySetInnerHTML={{__html: answer.answer}}

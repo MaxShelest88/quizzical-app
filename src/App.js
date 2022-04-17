@@ -39,7 +39,8 @@ function App() {
 		fetchQuizzes()
 	}, [])
 
-	console.log(quizzes);
+	console.log(quizzes)
+
 
 	const changeStart =() =>{
 		setStart(prevState => !prevState)
@@ -56,6 +57,8 @@ function App() {
 					<QuizzPage
 						quizzes={quizzes}
 						setQuizzes={setQuizzes}
+						fetchQuizzes={fetchQuizzes}
+						changeStart={changeStart}
 						/>}
 		</div>
 	);
